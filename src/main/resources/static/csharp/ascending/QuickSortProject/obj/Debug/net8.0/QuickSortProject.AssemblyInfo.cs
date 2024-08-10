@@ -13,7 +13,7 @@ using System.Reflection;
 [assembly: System.Reflection.AssemblyCompanyAttribute("QuickSortProject")]
 [assembly: System.Reflection.AssemblyConfigurationAttribute("Debug")]
 [assembly: System.Reflection.AssemblyFileVersionAttribute("1.0.0.0")]
-[assembly: System.Reflection.AssemblyInformationalVersionAttribute("1.0.0+3aab4979b13c78e633f55523882dc2a373c95884")]
+[assembly: System.Reflection.AssemblyInformationalVersionAttribute("1.0.0+cfe34e2b183b2c27c8da035849525d7eac77dce1")]
 [assembly: System.Reflection.AssemblyProductAttribute("QuickSortProject")]
 [assembly: System.Reflection.AssemblyTitleAttribute("QuickSortProject")]
 [assembly: System.Reflection.AssemblyVersionAttribute("1.0.0.0")]

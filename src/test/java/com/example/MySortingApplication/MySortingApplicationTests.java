@@ -1,13 +1,13 @@
-package com.example.sortingvisualizer;
+package com.example.MySortingApplication;
 
 import org.junit.jupiter.api.Test;
 import org.springframework.boot.test.context.SpringBootTest;
 
 @SpringBootTest
-class SortingvisualizerApplicationTests {
+class MySortingApplicationTests {
 
-	@Test
-	void contextLoads() {
-	}
+    @Test
+    void contextLoads() {
+    }
 
 }

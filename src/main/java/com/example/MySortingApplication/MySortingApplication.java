@@ -1,13 +1,13 @@
-package com.example.sortingvisualizer;
+package com.example.MySortingApplication;
 
 import org.springframework.boot.SpringApplication;
 import org.springframework.boot.autoconfigure.SpringBootApplication;
 
 @SpringBootApplication
-public class SortingvisualizerApplication {
+public class MySortingApplication {
 
 	public static void main(String[] args) {
-		SpringApplication.run(SortingvisualizerApplication.class, args);
+		SpringApplication.run(MySortingApplication.class, args);
 	}
 
 }
