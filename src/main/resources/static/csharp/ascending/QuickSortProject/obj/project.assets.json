@@ -13,11 +13,11 @@
   "project": {
     "version": "1.0.0",
     "restore": {
-      "projectUniqueName": "/home/solipuram-kranthikumar/Downloads/sortingvisualizer/src/main/resources/static/csharp/QuickSortProject/QuickSortProject.csproj",
+      "projectUniqueName": "/home/solipuram-kranthikumar/Downloads/sortingvisualizer/src/main/resources/static/csharp/ascending/QuickSortProject/QuickSortProject.csproj",
       "projectName": "QuickSortProject",
-      "projectPath": "/home/solipuram-kranthikumar/Downloads/sortingvisualizer/src/main/resources/static/csharp/QuickSortProject/QuickSortProject.csproj",
+      "projectPath": "/home/solipuram-kranthikumar/Downloads/sortingvisualizer/src/main/resources/static/csharp/ascending/QuickSortProject/QuickSortProject.csproj",
       "packagesPath": "/home/solipuram-kranthikumar/.nuget/packages/",
-      "outputPath": "/home/solipuram-kranthikumar/Downloads/sortingvisualizer/src/main/resources/static/csharp/QuickSortProject/obj/",
+      "outputPath": "/home/solipuram-kranthikumar/Downloads/sortingvisualizer/src/main/resources/static/csharp/ascending/QuickSortProject/obj/",
       "projectStyle": "PackageReference",
       "configFilePaths": [
         "/home/solipuram-kranthikumar/.nuget/NuGet/NuGet.Config"

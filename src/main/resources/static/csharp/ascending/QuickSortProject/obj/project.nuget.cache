@@ -1,8 +1,8 @@
 {
   "version": 2,
-  "dgSpecHash": "BCJCdaybL4NQV0frvN2uGt9d1euW7gJMYYqVbm7wDZHIiGkGYO9LMmsYtNJl5yXkKsxKF0Hk0zbisNhoQv9u+w==",
+  "dgSpecHash": "Sg9wLvAd3PVrqsIYw3csqmqZ0VF6njEukNKScHPPpu7HLD8hhl6yvH6fKxNHvDkk4NTaUkiMzxu4LiGR33AZ9g==",
   "success": true,
-  "projectFilePath": "/home/solipuram-kranthikumar/Downloads/sortingvisualizer/src/main/resources/static/csharp/QuickSortProject/QuickSortProject.csproj",
+  "projectFilePath": "/home/solipuram-kranthikumar/Downloads/sortingvisualizer/src/main/resources/static/csharp/ascending/QuickSortProject/QuickSortProject.csproj",
   "expectedPackageFiles": [],
   "logs": []
 }

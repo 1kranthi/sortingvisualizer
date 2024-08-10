@@ -1,0 +1,112 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Sorting Visualizer</title>
+    <style>
+        body {
+            display: flex;
+            justify-content: center;
+            align-items: center;
+            height: 100vh;
+            background-color: #f0f0f0; /* Solid background color */
+            margin: 0;
+            font-family: Arial, sans-serif;
+        }
+        .container {
+            background-color: #fff;
+            padding: 20px;
+            border-radius: 10px;
+            box-shadow: 0 0 10px rgba(0, 0, 0, 0.1);
+            text-align: center;
+            width: 300px;
+        }
+        .container div {
+            margin-bottom: 15px;
+        }
+        input[type="number"] {
+            width: 100%;
+            padding: 10px;
+            border: 1px solid #ccc;
+            border-radius: 5px;
+        }
+        select {
+            width: 100%;
+            padding: 10px;
+            border: 1px solid #ccc;
+            border-radius: 5px;
+        }
+        button {
+            width: 100%;
+            padding: 10px;
+            background-color: #007BFF;
+            color: white;
+            border: none;
+            border-radius: 5px;
+            cursor: pointer;
+        }
+        button:hover {
+            background-color: #0056b3;
+        }
+    </style>
+</head>
+<body>
+    <div class="container">
+        <div>
+            <label for="arraySize">Enter Array Size</label>
+            <input type="number" id="arraySize" placeholder="Enter array size" min="1">
+        </div>
+        <div>
+            <label for="algorithmType">Algorithm Type</label>
+            <select id="algorithmType">
+                <option value="quick">Quick Sort</option>
+                <option value="bubble">Bubble Sort</option>
+            </select>
+        </div>
+        <div>
+            <label for="sortType">Sorting Type</label>
+            <select id="sortType">
+                <option value="ascending">Ascending</option>
+                <option value="descending">Descending</option>
+            </select>
+        </div>
+        <button id="goButton">Go</button>
+    </div>
+
+    <script>
+        document.getElementById('goButton').addEventListener('click', function() {
+            const arraySize = document.getElementById('arraySize').value;
+            const algorithmType = document.getElementById('algorithmType').value;
+            const sortType = document.getElementById('sortType').value;
+
+            if (!arraySize) {
+                alert("Please enter an array size.");
+                return;
+            }
+
+            // Prepare data to send to the backend
+            const data = {
+                arraySize: arraySize,
+                algorithmType: algorithmType,
+                sortType: sortType
+            };
+
+            // Send data to the backend using fetch API
+            fetch('/sort', {
+                method: 'POST',
+                headers: {
+                    'Content-Type': 'application/json'
+                },
+                body: JSON.stringify(data)
+            })
+            .then(response => response.json())
+            .then(result => {
+                console.log(result);
+                alert("Sorted Array: " + result.sortedArray + "\nTime Taken: " + result.timeTaken + "ms");
+            })
+            .catch(error => console.error('Error:', error));
+        });
+    </script>
+</body>
+</html>

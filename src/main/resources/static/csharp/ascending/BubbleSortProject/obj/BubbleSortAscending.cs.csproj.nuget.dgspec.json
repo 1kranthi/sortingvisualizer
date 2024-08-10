@@ -1,17 +1,17 @@
 {
   "format": 1,
   "restore": {
-    "/home/solipuram-kranthikumar/Downloads/sortingvisualizer/src/main/resources/static/csharp/BubbleSortAscending.cs/BubbleSortAscending.cs.csproj": {}
+    "/home/solipuram-kranthikumar/Downloads/sortingvisualizer/src/main/resources/static/csharp/ascending/BubbleSortProject/BubbleSortAscending.cs.csproj": {}
   },
   "projects": {
-    "/home/solipuram-kranthikumar/Downloads/sortingvisualizer/src/main/resources/static/csharp/BubbleSortAscending.cs/BubbleSortAscending.cs.csproj": {
+    "/home/solipuram-kranthikumar/Downloads/sortingvisualizer/src/main/resources/static/csharp/ascending/BubbleSortProject/BubbleSortAscending.cs.csproj": {
       "version": "1.0.0",
       "restore": {
-        "projectUniqueName": "/home/solipuram-kranthikumar/Downloads/sortingvisualizer/src/main/resources/static/csharp/BubbleSortAscending.cs/BubbleSortAscending.cs.csproj",
+        "projectUniqueName": "/home/solipuram-kranthikumar/Downloads/sortingvisualizer/src/main/resources/static/csharp/ascending/BubbleSortProject/BubbleSortAscending.cs.csproj",
         "projectName": "BubbleSortAscending.cs",
-        "projectPath": "/home/solipuram-kranthikumar/Downloads/sortingvisualizer/src/main/resources/static/csharp/BubbleSortAscending.cs/BubbleSortAscending.cs.csproj",
+        "projectPath": "/home/solipuram-kranthikumar/Downloads/sortingvisualizer/src/main/resources/static/csharp/ascending/BubbleSortProject/BubbleSortAscending.cs.csproj",
         "packagesPath": "/home/solipuram-kranthikumar/.nuget/packages/",
-        "outputPath": "/home/solipuram-kranthikumar/Downloads/sortingvisualizer/src/main/resources/static/csharp/BubbleSortAscending.cs/obj/",
+        "outputPath": "/home/solipuram-kranthikumar/Downloads/sortingvisualizer/src/main/resources/static/csharp/ascending/BubbleSortProject/obj/",
         "projectStyle": "PackageReference",
         "configFilePaths": [
           "/home/solipuram-kranthikumar/.nuget/NuGet/NuGet.Config"
