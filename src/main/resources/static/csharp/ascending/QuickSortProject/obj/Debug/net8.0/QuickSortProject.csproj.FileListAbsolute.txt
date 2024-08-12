@@ -1,0 +1,15 @@
+/home/solipuram-kranthikumar/Downloads/sortingvisualizer/src/main/resources/static/csharp/ascending/QuickSortProject/bin/Debug/net8.0/QuickSortProject
+/home/solipuram-kranthikumar/Downloads/sortingvisualizer/src/main/resources/static/csharp/ascending/QuickSortProject/bin/Debug/net8.0/QuickSortProject.deps.json
+/home/solipuram-kranthikumar/Downloads/sortingvisualizer/src/main/resources/static/csharp/ascending/QuickSortProject/bin/Debug/net8.0/QuickSortProject.runtimeconfig.json
+/home/solipuram-kranthikumar/Downloads/sortingvisualizer/src/main/resources/static/csharp/ascending/QuickSortProject/bin/Debug/net8.0/QuickSortProject.dll
+/home/solipuram-kranthikumar/Downloads/sortingvisualizer/src/main/resources/static/csharp/ascending/QuickSortProject/bin/Debug/net8.0/QuickSortProject.pdb
+/home/solipuram-kranthikumar/Downloads/sortingvisualizer/src/main/resources/static/csharp/ascending/QuickSortProject/obj/Debug/net8.0/QuickSortProject.GeneratedMSBuildEditorConfig.editorconfig
+/home/solipuram-kranthikumar/Downloads/sortingvisualizer/src/main/resources/static/csharp/ascending/QuickSortProject/obj/Debug/net8.0/QuickSortProject.AssemblyInfoInputs.cache
+/home/solipuram-kranthikumar/Downloads/sortingvisualizer/src/main/resources/static/csharp/ascending/QuickSortProject/obj/Debug/net8.0/QuickSortProject.AssemblyInfo.cs
+/home/solipuram-kranthikumar/Downloads/sortingvisualizer/src/main/resources/static/csharp/ascending/QuickSortProject/obj/Debug/net8.0/QuickSortProject.csproj.CoreCompileInputs.cache
+/home/solipuram-kranthikumar/Downloads/sortingvisualizer/src/main/resources/static/csharp/ascending/QuickSortProject/obj/Debug/net8.0/QuickSortProject.sourcelink.json
+/home/solipuram-kranthikumar/Downloads/sortingvisualizer/src/main/resources/static/csharp/ascending/QuickSortProject/obj/Debug/net8.0/QuickSortProject.dll
+/home/solipuram-kranthikumar/Downloads/sortingvisualizer/src/main/resources/static/csharp/ascending/QuickSortProject/obj/Debug/net8.0/refint/QuickSortProject.dll
+/home/solipuram-kranthikumar/Downloads/sortingvisualizer/src/main/resources/static/csharp/ascending/QuickSortProject/obj/Debug/net8.0/QuickSortProject.pdb
+/home/solipuram-kranthikumar/Downloads/sortingvisualizer/src/main/resources/static/csharp/ascending/QuickSortProject/obj/Debug/net8.0/QuickSortProject.genruntimeconfig.cache
+/home/solipuram-kranthikumar/Downloads/sortingvisualizer/src/main/resources/static/csharp/ascending/QuickSortProject/obj/Debug/net8.0/ref/QuickSortProject.dll

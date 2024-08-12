@@ -1,0 +1,15 @@
+/home/solipuram-kranthikumar/Downloads/sortingvisualizer/src/main/resources/static/csharp/descending/BubbleSortProject/bin/Debug/net8.0/BubbleSortProject
+/home/solipuram-kranthikumar/Downloads/sortingvisualizer/src/main/resources/static/csharp/descending/BubbleSortProject/bin/Debug/net8.0/BubbleSortProject.deps.json
+/home/solipuram-kranthikumar/Downloads/sortingvisualizer/src/main/resources/static/csharp/descending/BubbleSortProject/bin/Debug/net8.0/BubbleSortProject.runtimeconfig.json
+/home/solipuram-kranthikumar/Downloads/sortingvisualizer/src/main/resources/static/csharp/descending/BubbleSortProject/bin/Debug/net8.0/BubbleSortProject.dll
+/home/solipuram-kranthikumar/Downloads/sortingvisualizer/src/main/resources/static/csharp/descending/BubbleSortProject/bin/Debug/net8.0/BubbleSortProject.pdb
+/home/solipuram-kranthikumar/Downloads/sortingvisualizer/src/main/resources/static/csharp/descending/BubbleSortProject/obj/Debug/net8.0/BubbleSortProject.GeneratedMSBuildEditorConfig.editorconfig
+/home/solipuram-kranthikumar/Downloads/sortingvisualizer/src/main/resources/static/csharp/descending/BubbleSortProject/obj/Debug/net8.0/BubbleSortProject.AssemblyInfoInputs.cache
+/home/solipuram-kranthikumar/Downloads/sortingvisualizer/src/main/resources/static/csharp/descending/BubbleSortProject/obj/Debug/net8.0/BubbleSortProject.AssemblyInfo.cs
+/home/solipuram-kranthikumar/Downloads/sortingvisualizer/src/main/resources/static/csharp/descending/BubbleSortProject/obj/Debug/net8.0/BubbleSortProject.csproj.CoreCompileInputs.cache
+/home/solipuram-kranthikumar/Downloads/sortingvisualizer/src/main/resources/static/csharp/descending/BubbleSortProject/obj/Debug/net8.0/BubbleSortProject.sourcelink.json
+/home/solipuram-kranthikumar/Downloads/sortingvisualizer/src/main/resources/static/csharp/descending/BubbleSortProject/obj/Debug/net8.0/BubbleSortProject.dll
+/home/solipuram-kranthikumar/Downloads/sortingvisualizer/src/main/resources/static/csharp/descending/BubbleSortProject/obj/Debug/net8.0/refint/BubbleSortProject.dll
+/home/solipuram-kranthikumar/Downloads/sortingvisualizer/src/main/resources/static/csharp/descending/BubbleSortProject/obj/Debug/net8.0/BubbleSortProject.pdb
+/home/solipuram-kranthikumar/Downloads/sortingvisualizer/src/main/resources/static/csharp/descending/BubbleSortProject/obj/Debug/net8.0/BubbleSortProject.genruntimeconfig.cache
+/home/solipuram-kranthikumar/Downloads/sortingvisualizer/src/main/resources/static/csharp/descending/BubbleSortProject/obj/Debug/net8.0/ref/BubbleSortProject.dll

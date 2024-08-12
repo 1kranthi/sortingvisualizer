@@ -16,7 +16,7 @@ function partition(arr, low, high) {
     let i = low - 1;
 
     for (let j = low; j < high; j++) {
-        if (arr[j] <= pivot) { // Ascending order
+        if (arr[j] >= pivot) { // Ascending order
             i++;
             [arr[i], arr[j]] = [arr[j], arr[i]];
         }

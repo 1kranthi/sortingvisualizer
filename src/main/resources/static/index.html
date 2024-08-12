@@ -10,7 +10,7 @@
             justify-content: center;
             align-items: center;
             height: 100vh;
-            background-color: #f0f0f0; /* Solid background color */
+            background-color: #f0f0f0;
             margin: 0;
             font-family: Arial, sans-serif;
         }
@@ -49,63 +49,85 @@
         button:hover {
             background-color: #0056b3;
         }
+        #result {
+            margin-top: 20px;
+            white-space: pre-wrap; /* Preserve formatting */
+            text-align: left;
+            max-height: 300px;
+            overflow-y: auto;
+        }
     </style>
 </head>
 <body>
     <div class="container">
-        <div>
-            <label for="arraySize">Enter Array Size</label>
-            <input type="number" id="arraySize" placeholder="Enter array size" min="1">
+        <h1>Sorting Visualizer</h1>
+        <form id="sort-form">
+            <div>
+                <label for="arraySize">Enter Array Size</label>
+                <input type="number" id="arraySize" name="arraySize" placeholder="Enter array size" min="1" required>
+            </div>
+            <div>
+                <label for="algorithmType">Algorithm Type</label>
+                <select id="algorithmType" name="algorithmType">
+                    <option value="quicksort">Quick Sort</option>
+                    <option value="bubblesort">Bubble Sort</option>
+                </select>
+            </div>
+            <div>
+                <label for="sortType">Sorting Type</label>
+                <select id="sortType" name="sortType">
+                    <option value="ascending">Ascending</option>
+                    <option value="descending">Descending</option>
+                </select>
+            </div>
+            <button type="submit">Sort</button>
+        </form>
+        <div id="result" class="result">
+            <!-- Sorting results will be displayed here -->
         </div>
-        <div>
-            <label for="algorithmType">Algorithm Type</label>
-            <select id="algorithmType">
-                <option value="quick">Quick Sort</option>
-                <option value="bubble">Bubble Sort</option>
-            </select>
-        </div>
-        <div>
-            <label for="sortType">Sorting Type</label>
-            <select id="sortType">
-                <option value="ascending">Ascending</option>
-                <option value="descending">Descending</option>
-            </select>
-        </div>
-        <button id="goButton">Go</button>
     </div>
-
+   
     <script>
-        document.getElementById('goButton').addEventListener('click', function() {
-            const arraySize = document.getElementById('arraySize').value;
-            const algorithmType = document.getElementById('algorithmType').value;
-            const sortType = document.getElementById('sortType').value;
+        document.getElementById("sort-form").addEventListener("submit", function (event) {
+            event.preventDefault();
 
-            if (!arraySize) {
-                alert("Please enter an array size.");
-                return;
-            }
+            const arraySize = document.getElementById("arraySize").value;
+            const sortType = document.getElementById("sortType").value;
+            const algorithmType = document.getElementById("algorithmType").value;
 
-            // Prepare data to send to the backend
-            const data = {
-                arraySize: arraySize,
-                algorithmType: algorithmType,
-                sortType: sortType
-            };
-
-            // Send data to the backend using fetch API
-            fetch('/sort', {
-                method: 'POST',
+            fetch("/sort/execute", {
+                method: "POST",
                 headers: {
-                    'Content-Type': 'application/json'
+                    "Content-Type": "application/json",
                 },
-                body: JSON.stringify(data)
+                body: JSON.stringify({
+                    arraySize: arraySize,
+                    sortType: sortType,
+                    algorithmType: algorithmType,
+                }),
             })
             .then(response => response.json())
-            .then(result => {
-                console.log(result);
-                alert("Sorted Array: " + result.sortedArray + "\nTime Taken: " + result.timeTaken + "ms");
+            .then(data => {
+                const resultDiv = document.getElementById("result");
+                resultDiv.innerHTML = ""; // Clear previous results
+
+                for (const [language, result] of Object.entries(data)) {
+                    const resultHtml = `
+                        <h2>${language} Result</h2>
+                        <p><strong>Exit Code:</strong> ${result.exitCode}</p>
+                        <p><strong>Output:</strong> <pre>${result.output}</pre></p>
+                        <p><strong>Error Output:</strong> <pre>${result.errorOutput}</pre></p>
+                        <p><strong>Original Array File:</strong> ${result.originalArrayFile}</p>
+                        <p><strong>Sorted Array File:</strong> ${result.sortedArrayFile}</p>
+                        <p><strong>Time Taken:</strong> ${result.timeTaken}</p>
+                    `;
+                    resultDiv.innerHTML += resultHtml;
+                }
             })
-            .catch(error => console.error('Error:', error));
+            .catch(error => {
+                console.error("Error:", error);
+                document.getElementById('result').textContent = 'An error occurred while processing the request.';
+            });
         });
     </script>
 </body>

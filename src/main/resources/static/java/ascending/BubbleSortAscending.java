@@ -1,7 +1,7 @@
-package java.ascending;
-
 import java.io.FileWriter;
 import java.io.IOException;
+import java.util.ArrayList;
+import java.util.List;
 import java.util.Random;
 import java.util.Scanner;
 
@@ -14,63 +14,59 @@ public class BubbleSortAscending {
 
         long startTime = System.currentTimeMillis();
 
-        int[] arr = new int[n];
+        List<Integer> arr = new ArrayList<>(n);
         Random random = new Random();
         for (int i = 0; i < n; i++) {
-            arr[i] = random.nextInt(100) + 1;
+            arr.add(random.nextInt(100) + 1);
         }
 
-        String directory = "Sorting_Problems/";
-        String original = directory + "original_array.csv";
-        String sort = directory + "sorted_result.csv";
+        // File paths in the current directory
+        String original = "original_array.csv";
+        String sort = "sorted_result.csv";
 
-        try (FileWriter writer = new FileWriter(original)) {
-            for (int i = 0; i < arr.length; i++) {
-                writer.append(String.valueOf(arr[i]));
-                if (i < arr.length - 1) {
-                    writer.append(",");
-                }
-            }
-            writer.append("\n");
-        } catch (IOException e) {
-            e.printStackTrace();
-        }
+        // Write original array to file
+        writeToFile(original, arr);
 
+        // Sort the array
         bubbleSort(arr);
 
-        try (FileWriter writer = new FileWriter(sort)) {
-            for (int i = 0; i < arr.length; i++) {
-                writer.append(String.valueOf(arr[i]));
-                if (i < arr.length - 1) {
-                    writer.append(",");
-                }
-            }
-            writer.append("\n");
-        } catch (IOException e) {
-            e.printStackTrace();
-        }
-
-        sc.close();
+        // Write sorted array to file
+        writeToFile(sort, arr);
 
         long endTime = System.currentTimeMillis();
-        long totalTime = endTime - startTime;
-        double totalSeconds=totalTime/1000;
+        double totalSeconds = (endTime - startTime) / 1000.0;
 
         System.out.println("Original and sorted arrays have been saved to CSV files.");
         System.out.println("Original array file: " + original);
         System.out.println("Sorted array file: " + sort);
         System.out.println("Time taken: " + totalSeconds + " seconds.");
+
+        sc.close();
     }
 
-    public static void bubbleSort(int[] arr) {
-        for (int i = 0; i < arr.length - 1; i++) {
-            for (int j = 0; j < arr.length - i - 1; j++) {
-                if (arr[j + 1] < arr[j]) {
-                    int temp = arr[j + 1];
-                    arr[j + 1] = arr[j];
-                    arr[j] = temp;
+    public static void bubbleSort(List<Integer> arr) {
+        for (int i = 0; i < arr.size() - 1; i++) {
+            for (int j = 0; j < arr.size() - i - 1; j++) {
+                if (arr.get(j + 1) < arr.get(j)) {
+                    int temp = arr.get(j + 1);
+                    arr.set(j + 1, arr.get(j));
+                    arr.set(j, temp);
                 }
             }
+        }
+    }
+
+    public static void writeToFile(String filename, List<Integer> arr) {
+        try (FileWriter writer = new FileWriter(filename)) {
+            for (int i = 0; i < arr.size(); i++) {
+                writer.append(String.valueOf(arr.get(i)));
+                if (i < arr.size() - 1) {
+                    writer.append(",");
+                }
+            }
+            writer.append("\n");
+        } catch (IOException e) {
+            e.printStackTrace();
         }
     }
 }

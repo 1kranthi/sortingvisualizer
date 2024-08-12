@@ -5,6 +5,23 @@
 #include <cstdlib>
 #include <ctime>
 
+// Function to generate a random array and save it to a CSV file
+void generateRandomArray(const std::string& filename, int size) {
+    std::ofstream file(filename);
+    if (file.is_open()) {
+        for (int i = 0; i < size; ++i) {
+            file << std::rand() % 100 + 1; // Random numbers between 1 and 100
+            if (i < size - 1) {
+                file << ",";
+            }
+        }
+        file << "\n";
+        file.close();
+    } else {
+        std::cerr << "Error: Unable to open file " << filename << std::endl;
+    }
+}
+
 // Function to read CSV file into a vector
 std::vector<int> readCSV(const std::string& filename) {
     std::vector<int> arr;
@@ -57,7 +74,7 @@ private:
         int pivot = arr[high];
         int i = low - 1;
         for (int j = low; j < high; j++) {
-            if (arr[j] <= pivot) {
+            if (arr[j] < pivot) {
                 i++;
                 std::swap(arr[i], arr[j]);
             }
@@ -70,8 +87,15 @@ private:
 int main() {
     std::string originalFile = "original_array.csv";
     std::string sortedFile = "sorted_result.csv";
+    int arraySize;
 
-    // Read the original array from the existing CSV file
+    std::cout << "Enter the size of the array: ";
+    std::cin >> arraySize;
+
+    // Generate random array and save it to CSV
+    generateRandomArray(originalFile, arraySize);
+
+    // Read the original array from the CSV file
     std::vector<int> arr = readCSV(originalFile);
     if (arr.empty()) {
         std::cerr << "Error: No data read from the original CSV file." << std::endl;
@@ -89,12 +113,12 @@ int main() {
     std::clock_t endTime = std::clock();
     double duration = (endTime - startTime) / (double)CLOCKS_PER_SEC;
 
-    // Write the sorted array to the existing or a new CSV file
+    // Write the sorted array to the CSV file
     writeCSV(sortedFile, arr);
 
     std::cout << "Original and sorted arrays have been saved to CSV files.\n";
-    std::cout << "Original array: " << originalFile << "\n";
-    std::cout << "Sorted array: " << sortedFile << "\n";
+    std::cout << "Original array file: " << originalFile << "\n";
+    std::cout << "Sorted array file: " << sortedFile << "\n";
     std::cout << "Time taken: " << duration << " seconds.\n";
 
     return 0;

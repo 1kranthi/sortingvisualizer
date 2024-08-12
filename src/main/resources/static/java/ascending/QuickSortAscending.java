@@ -1,5 +1,3 @@
-package java.ascending;
-
 import java.io.FileWriter;
 import java.io.IOException;
 import java.util.Random;
@@ -36,7 +34,7 @@ public class QuickSortAscending {
     }
 
     public static void main(String[] args) {
-        QuickAscendingJava obj = new QuickAscendingJava();
+        QuickSortAscending  obj = new QuickSortAscending ();
         Scanner sc = new Scanner(System.in);
 
         System.out.print("Enter the size of the array: ");
