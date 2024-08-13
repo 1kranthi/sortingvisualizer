@@ -1,92 +1,116 @@
 import java.io.FileWriter;
 import java.io.IOException;
+import java.nio.file.Files;
+import java.nio.file.Paths;
+import java.util.ArrayList;
+import java.util.List;
 import java.util.Random;
 import java.util.Scanner;
 
 public class QuickSortAscending {
 
-    int partition(int arr[], int low, int high) {
-        int pivot = arr[high];
-        int i = low - 1; 
-
-        for (int j = low; j < high; j++) {
-            if (arr[j] <= pivot) {
-                i++;
-                int temp = arr[i];
-                arr[i] = arr[j];
-                arr[j] = temp;
-            }
-        }
-
-        int temp = arr[i + 1];
-        arr[i + 1] = arr[high];
-        arr[high] = temp;
-
-        return i + 1;
-    }
-
-    void quicksort(int arr[], int low, int high) {
-        if (low < high) {
-            int pivot = partition(arr, low, high);
-            quicksort(arr, low, pivot - 1);
-            quicksort(arr, pivot + 1, high);
-        }
-    }
-
     public static void main(String[] args) {
-        QuickSortAscending  obj = new QuickSortAscending ();
         Scanner sc = new Scanner(System.in);
-
         System.out.print("Enter the size of the array: ");
-        int k = sc.nextInt();
-
-        int arr[] = new int[k];
-        Random random = new Random();
-        for (int i = 0; i < arr.length; i++) {
-            arr[i] = random.nextInt(100) + 1;
-        }
+        int n = sc.nextInt();
 
         long startTime = System.currentTimeMillis();
 
-        // Use relative paths
-        String originalFile = "original_array.csv";
-        String sortedFile = "sorted_result.csv";
+        // Relative path to the static directory
+        String basePath = "../../"; // Go up two levels to reach the static directory
+        String originalFilePath = basePath + "original_array.csv";
+        String sortedFilePath = basePath + "sorted_result.csv";
 
-        try (FileWriter writer = new FileWriter(originalFile)) {
-            for (int i = 0; i < arr.length; i++) {
-                writer.append(String.valueOf(arr[i]));
-                if (i < arr.length - 1) {
-                    writer.append(",");
-                }
+        List<Integer> arr;
+
+        // Check if the original array file exists
+        if (Files.exists(Paths.get(originalFilePath))) {
+            // System.out.println("Original array file found. Reading from file...");
+            arr = readFromFile(originalFilePath);
+        } else {
+            // System.out.println("Original array file not found. Creating new array...");
+            arr = new ArrayList<>(n);
+            Random random = new Random();
+            for (int i = 0; i < n; i++) {
+                arr.add(random.nextInt(100) + 1);
             }
-            writer.append("\n");
-        } catch (IOException e) {
-            e.printStackTrace();
+            // Write the original array to file
+            writeToFile(originalFilePath, arr);
         }
 
-        obj.quicksort(arr, 0, arr.length - 1);
+        // Sort the array using Quick Sort
+        quickSort(arr, 0, arr.size() - 1);
 
-        try (FileWriter writer = new FileWriter(sortedFile)) {
-            for (int i = 0; i < arr.length; i++) {
-                writer.append(String.valueOf(arr[i]));
-                if (i < arr.length - 1) {
-                    writer.append(",");
-                }
-            }
-            writer.append("\n");
-        } catch (IOException e) {
-            e.printStackTrace();
-        }
+        // Write the sorted array to file
+        writeToFile(sortedFilePath, arr);
 
         long endTime = System.currentTimeMillis();
-        long totalTime = endTime - startTime;
-        double seconds = totalTime / 1000.0; 
+        double totalSeconds = (endTime - startTime) / 1000.0;
 
-        System.out.println("Original and sorted arrays have been saved to CSV files.");
-        System.out.println("Original array: " + originalFile);
-        System.out.println("Sorted array: " + sortedFile);
-        System.out.println("Time taken: " + seconds + " seconds.");
+        // // Output results with HTML-style links
+        // System.out.println("Original array file: <a href=\"" + originalFilePath + "\">original_array.csv</a>");
+        // System.out.println("Sorted array file: <a href=\"" + sortedFilePath + "\">sorted_result.csv</a>");
+        System.out.println("Time taken: " + totalSeconds + " seconds.");
 
         sc.close();
+    }
+
+    // Quick Sort implementation
+    public static void quickSort(List<Integer> arr, int low, int high) {
+        if (low < high) {
+            int pivotIndex = partition(arr, low, high);
+            quickSort(arr, low, pivotIndex - 1);
+            quickSort(arr, pivotIndex + 1, high);
+        }
+    }
+
+    // Partition method used in Quick Sort
+    private static int partition(List<Integer> arr, int low, int high) {
+        int pivot = arr.get(high);
+        int i = low - 1;
+        for (int j = low; j < high; j++) {
+            if (arr.get(j) <= pivot) {
+                i++;
+                // Swap arr[i] with arr[j]
+                int temp = arr.get(i);
+                arr.set(i, arr.get(j));
+                arr.set(j, temp);
+            }
+        }
+        // Swap arr[i + 1] with arr[high]
+        int temp = arr.get(i + 1);
+        arr.set(i + 1, arr.get(high));
+        arr.set(high, temp);
+        return i + 1;
+    }
+
+    // Write array to CSV file
+    public static void writeToFile(String filename, List<Integer> arr) {
+        try (FileWriter writer = new FileWriter(filename)) {
+            for (int i = 0; i < arr.size(); i++) {
+                writer.append(String.valueOf(arr.get(i)));
+                if (i < arr.size() - 1) {
+                    writer.append(",");
+                }
+            }
+            writer.append("\n");
+        } catch (IOException e) {
+            e.printStackTrace();
+        }
+    }
+
+    // Read array from CSV file
+    public static List<Integer> readFromFile(String filename) {
+        List<Integer> arr = new ArrayList<>();
+        try {
+            String content = new String(Files.readAllBytes(Paths.get(filename)));
+            String[] values = content.split(",");
+            for (String value : values) {
+                arr.add(Integer.parseInt(value.trim()));
+            }
+        } catch (IOException e) {
+            e.printStackTrace();
+        }
+        return arr;
     }
 }

@@ -58,7 +58,7 @@ public class BubbleSortAscending {
     public static void bubbleSort(List<Integer> arr) {
         for (int i = 0; i < arr.size() - 1; i++) {
             for (int j = 0; j < arr.size() - i - 1; j++) {
-                if (arr.get(j + 1) < arr.get(j)) {
+                if (arr.get(j + 1) > arr.get(j)) {
                     int temp = arr.get(j + 1);
                     arr.set(j + 1, arr.get(j));
                     arr.set(j, temp);

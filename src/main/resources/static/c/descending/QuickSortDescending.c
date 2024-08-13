@@ -1,37 +1,126 @@
 #include <stdio.h>
 #include <stdlib.h>
 #include <time.h>
+#include <string.h>
 
-void quickSort(int arr[], int low, int high);
-int partition(int arr[], int low, int high);
-void writeToFile(const char* filename, int arr[], int size);
+// Function to swap two elements
+void swap(int* a, int* b) {
+    int temp = *a;
+    *a = *b;
+    *b = temp;
+}
+
+// Partition function used in Quick Sort
+int partition(int arr[], int low, int high) {
+    int pivot = arr[high]; // Choosing the pivot element
+    int i = (low - 1); // Index of the smaller element
+
+    for (int j = low; j <= high - 1; j++) {
+        // If current element is smaller than the pivot
+        if (arr[j] > pivot) {
+            i++; // Increment index of smaller element
+            swap(&arr[i], &arr[j]);
+        }
+    }
+    swap(&arr[i + 1], &arr[high]);
+    return (i + 1);
+}
+
+// Quick Sort function
+void quickSort(int arr[], int low, int high) {
+    if (low < high) {
+        int pi = partition(arr, low, high);
+
+        quickSort(arr, low, pi - 1); // Recursively sort elements before partition
+        quickSort(arr, pi + 1, high); // Recursively sort elements after partition
+    }
+}
+
+// Function to write an array to a CSV file
+void writeToFile(const char* filename, int arr[], int n) {
+    FILE *file = fopen(filename, "w");
+    if (file == NULL) {
+        printf("Error opening file %s\n", filename);
+        return;
+    }
+    for (int i = 0; i < n; i++) {
+        fprintf(file, "%d", arr[i]);
+        if (i < n - 1) {
+            fprintf(file, ",");
+        }
+    }
+    fprintf(file, "\n");
+    fclose(file);
+}
+
+// Function to read an array from a CSV file
+int* readFromFile(const char* filename, int* n) {
+    FILE *file = fopen(filename, "r");
+    if (file == NULL) {
+        printf("Error opening file %s\n", filename);
+        return NULL;
+    }
+
+    int *arr = NULL;
+    int count = 0, value;
+    char buffer[4096];
+
+    if (fgets(buffer, sizeof(buffer), file)) {
+        char *token = strtok(buffer, ",");
+        while (token != NULL) {
+            count++;
+            arr = realloc(arr, count * sizeof(int));
+            if (arr == NULL) {
+                printf("Memory allocation failed\n");
+                fclose(file);
+                return NULL;
+            }
+            sscanf(token, "%d", &value);
+            arr[count - 1] = value;
+            token = strtok(NULL, ",");
+        }
+    }
+
+    *n = count;
+    fclose(file);
+    return arr;
+}
 
 int main() {
     int n;
     printf("Enter the size of the array: ");
     scanf("%d", &n);
 
-    int* arr = (int*)malloc(n * sizeof(int));
-    if (arr == NULL) {
-        perror("Unable to allocate memory");
-        return EXIT_FAILURE;
-    }
+    // Define file paths
+    const char* originalFile = "../../../static/original_array.csv";
+    const char* sortedFile = "../../../static/sorted_result.csv";
 
-    srand((unsigned int)time(NULL));
-    for (int i = 0; i < n; i++) {
-        arr[i] = rand() % 100 + 1;
+    int *arr = NULL;
+
+    // Check if the original array file exists
+    FILE *file = fopen(originalFile, "r");
+    if (file) {
+        // printf("Original array file found. Reading from file...\n");
+        fclose(file);
+        arr = readFromFile(originalFile, &n);
+    } else {
+        // printf("Original array file not found. Creating new array...\n");
+        arr = (int*)malloc(n * sizeof(int));
+        if (arr == NULL) {
+            printf("Memory allocation failed\n");
+            return 1;
+        }
+
+        srand(time(0));
+        for (int i = 0; i < n; i++) {
+            arr[i] = rand() % 100 + 1;
+        }
+        writeToFile(originalFile, arr, n);
     }
 
     clock_t startTime = clock();
 
-    // Define file names
-    const char* originalFile = "original_array.csv";
-    const char* sortedFile = "sorted_result.csv";
-
-    // Write the original array to file
-    writeToFile(originalFile, arr, n);
-
-    // Perform QuickSort
+    // Sort the array using Quick Sort
     quickSort(arr, 0, n - 1);
 
     // Write the sorted array to file
@@ -40,59 +129,11 @@ int main() {
     clock_t endTime = clock();
     double totalTime = (double)(endTime - startTime) / CLOCKS_PER_SEC;
 
-    printf("Original and sorted arrays have been saved to CSV files.\n");
-    printf("Original array file: %s\n", originalFile);
-    printf("Sorted array file: %s\n", sortedFile);
-    printf("Time taken: %.2f seconds.\n", totalTime);
+    // Output results with file paths
+    // printf("Original array file: %s\n", originalFile);
+    // printf("Sorted array file: %s\n", sortedFile);
+    printf("Time taken: %.6f seconds.\n", totalTime);
 
     free(arr);
-    return EXIT_SUCCESS;
-}
-
-// QuickSort function
-void quickSort(int arr[], int low, int high) {
-    if (low < high) {
-        int pivotIndex = partition(arr, low, high);
-        quickSort(arr, low, pivotIndex - 1);
-        quickSort(arr, pivotIndex + 1, high);
-    }
-}
-
-// Partition function for QuickSort
-int partition(int arr[], int low, int high) {
-    int pivot = arr[high];
-    int i = low - 1;
-
-    for (int j = low; j < high; j++) {
-        if (arr[j] <= pivot) {
-            i++;
-            int temp = arr[i];
-            arr[i] = arr[j];
-            arr[j] = temp;
-        }
-    }
-    int temp = arr[i + 1];
-    arr[i + 1] = arr[high];
-    arr[high] = temp;
-
-    return i + 1;
-}
-
-// Function to write an array to a CSV file
-void writeToFile(const char* filename, int arr[], int size) {
-    FILE* file = fopen(filename, "w");
-    if (file == NULL) {
-        perror("Unable to open file");
-        return;
-    }
-
-    for (int i = 0; i < size; i++) {
-        fprintf(file, "%d", arr[i]);
-        if (i < size - 1) {
-            fprintf(file, ",");
-        }
-    }
-    fprintf(file, "\n");
-
-    fclose(file);
+    return 0;
 }

@@ -1,75 +1,72 @@
 const fs = require('fs');
-const readline = require('readline');
+const path = require('path');
 
-// QuickSort function
-function quickSort(arr, low, high) {
-    if (low < high) {
-        const pivotIndex = partition(arr, low, high);
-        quickSort(arr, low, pivotIndex - 1);
-        quickSort(arr, pivotIndex + 1, high);
-    }
+// Quick Sort Algorithm
+function quickSort(arr) {
+    if (arr.length <= 1) return arr;
+    const pivot = arr[Math.floor(arr.length / 2)];
+    const left = arr.filter(x => x < pivot);
+    const middle = arr.filter(x => x === pivot);
+    const right = arr.filter(x => x > pivot);
+    return [...quickSort(left), ...middle, ...quickSort(right)];
 }
 
-// Partition function for QuickSort
-function partition(arr, low, high) {
-    const pivot = arr[high];
-    let i = low - 1;
-
-    for (let j = low; j < high; j++) {
-        if (arr[j] <= pivot) { // Ascending order
-            i++;
-            [arr[i], arr[j]] = [arr[j], arr[i]];
-        }
-    }
-    [arr[i + 1], arr[high]] = [arr[high], arr[i + 1]];
-
-    return i + 1;
-}
-
-// Function to write an array to a CSV file
+// Write array to a file
 function writeToFile(filename, arr) {
     const data = arr.join(',') + '\n';
     fs.writeFileSync(filename, data);
 }
 
-// Function to get user input
-function getUserInput(question) {
-    return new Promise((resolve) => {
-        const rl = readline.createInterface({
-            input: process.stdin,
-            output: process.stdout
-        });
-        rl.question(question, (answer) => {
-            rl.close();
-            resolve(answer);
-        });
-    });
+// Read array from a file
+function readFromFile(filename) {
+    if (!fs.existsSync(filename)) {
+        console.error('File not found:', filename);
+        return [];
+    }
+    const content = fs.readFileSync(filename, 'utf-8');
+    return content.split(',').map(num => parseInt(num.trim(), 10));
 }
 
-async function main() {
-    const n = parseInt(await getUserInput("Enter the size of the array: "), 10);
-    const arr = Array.from({ length: n }, () => Math.floor(Math.random() * 100) + 1);
+// Main function
+function main() {
+    if (process.argv.length < 3) {
+        console.error('Usage: node script.js <array-size>');
+        process.exit(1);
+    }
+
+    const n = parseInt(process.argv[2], 10); // Get array size from command-line argument
+    if (isNaN(n) || n <= 0) {
+        console.error('Array size must be a positive integer.');
+        process.exit(1);
+    }
+
+    const basePath = path.join(__dirname, '../../'); // Go up two levels to reach the static directory
+    const originalFile = path.join(basePath, 'original_array.csv');
+    const sortedFile = path.join(basePath, 'sorted_result.csv');
+
+    let arr;
+
+    if (fs.existsSync(originalFile)) {
+        // console.log('Original array file found. Reading from file...');
+        arr = readFromFile(originalFile);
+    } else {
+        // console.log('Original array file not found. Creating new array...');
+        arr = Array.from({ length: n }, () => Math.floor(Math.random() * 100) + 1);
+        writeToFile(originalFile, arr);
+    }
 
     const startTime = Date.now();
 
-    const originalFile = 'original_array.csv';
-    const sortedFile = 'sorted_result.csv';
+    arr = quickSort(arr);
 
-    // Write the original array to file
-    writeToFile(originalFile, arr);
-
-    // Perform QuickSort
-    quickSort(arr, 0, arr.length - 1);
-
-    // Write the sorted array to file
     writeToFile(sortedFile, arr);
 
     const endTime = Date.now();
     const totalTime = (endTime - startTime) / 1000;
 
-    console.log("Original and sorted arrays have been saved to CSV files.");
-    console.log(`Original array file: ${originalFile}`);
-    console.log(`Sorted array file: ${sortedFile}`);
+    // // Output results with HTML-style links
+    // console.log(`Original array file: <a href="/static/original_array.csv">original_array.csv</a>`);
+    // console.log(`Sorted array file: <a href="/static/sorted_result.csv">sorted_result.csv</a>`);
     console.log(`Time taken: ${totalTime} seconds.`);
 }
 

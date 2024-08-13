@@ -1,3 +1,4 @@
+
 package com.example.sortingvisualizer.controller;
 
 import org.springframework.web.bind.annotation.*;
@@ -60,7 +61,6 @@ public class SortingController {
         String runCommand = "";
         String path = basePath + direction;
         String inputSize = String.valueOf(request.getArraySize()); // Get array size from request
-
         switch (language) {
             case "c":
                 compileCommand = "gcc " + algorithm + direction.substring(0, 1).toUpperCase() + direction.substring(1) + ".c -o " + algorithm + direction.substring(0, 1).toUpperCase() + direction.substring(1);
@@ -80,14 +80,14 @@ public class SortingController {
                 break;
             case "javascript":
                 compileCommand = ""; // No compilation needed for JavaScript
-                runCommand = "echo -e \"" + inputSize + "\" | node " + algorithm + direction.substring(0, 1).toUpperCase() + direction.substring(1) + extension;
+                runCommand = "node " + algorithm + direction.substring(0, 1).toUpperCase() + direction.substring(1) + extension + " " + inputSize;
+
                 break;
             case "csharp":
-                compileCommand = "dotnet build -o output";
-                runCommand = "echo -e \"" + inputSize + "\" | dotnet output/" + algorithm + direction.substring(0, 1).toUpperCase() + direction.substring(1) + ".dll";
+                path = basePath + direction + "/" + algorithm + "Project";
+                runCommand = "echo -e \"" + inputSize + "\" | dotnet run";
                 break;
         }
-
         StringBuilder command = new StringBuilder("cd " + path);
         if (!compileCommand.isEmpty()) {
             command.append(" && ").append(compileCommand);
@@ -120,6 +120,9 @@ public class SortingController {
             result.setErrorOutput(errorOutput.toString());
             result.setExitCode(exitCode);
 
+            System.out.println("Full Output: " + output.toString()); // Add this line
+        System.out.println("Error Output: " + errorOutput.toString());
+        
             // Assuming the program prints the time taken and file names
             String[] outputLines = output.toString().split("\n");
             for (String outputLine : outputLines) {

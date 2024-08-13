@@ -9,28 +9,30 @@ static class Program
         Console.Write("Enter the size of the array: ");
         int n = int.Parse(Console.ReadLine());
 
-        int[] arr = new int[n];
-        Random random = new Random();
-        for (int i = 0; i < n; i++)
+        // Define file paths relative to the "static" directory
+        string currentPath = Directory.GetCurrentDirectory();
+        string basePath = Path.Combine(currentPath, "../../../../static");
+        string originalFile = Path.Combine(basePath, "original_array.csv");
+        string sortedFile = Path.Combine(basePath, "sorted_result.csv");
+
+        int[] arr;
+
+        // Check if the original array file exists
+        if (File.Exists(originalFile))
         {
-            arr[i] = random.Next(1, 101);
+            // Console.WriteLine("Original array file found. Reading from file...");
+            arr = ReadFromFile(originalFile);
         }
-
-        string originalFile = "original_array.csv";
-        string sortedFile = "sorted_result.csv";
-
-        // Write original array to file
-        using (StreamWriter writer = new StreamWriter(originalFile))
+        else
         {
-            for (int i = 0; i < arr.Length; i++)
+            // Console.WriteLine("Original array file not found. Creating new array...");
+            arr = new int[n];
+            Random random = new Random();
+            for (int i = 0; i < n; i++)
             {
-                writer.Write(arr[i]);
-                if (i < arr.Length - 1)
-                {
-                    writer.Write(",");
-                }
+                arr[i] = random.Next(1, 101);
             }
-            writer.WriteLine();
+            WriteToFile(originalFile, arr);
         }
 
         // Start timing
@@ -44,22 +46,11 @@ static class Program
         double totalTime = stopwatch.Elapsed.TotalSeconds;
 
         // Write sorted array to file
-        using (StreamWriter writer = new StreamWriter(sortedFile))
-        {
-            for (int i = 0; i < arr.Length; i++)
-            {
-                writer.Write(arr[i]);
-                if (i < arr.Length - 1)
-                {
-                    writer.Write(",");
-                }
-            }
-            writer.WriteLine();
-        }
+        WriteToFile(sortedFile, arr);
 
-        Console.WriteLine("Original and sorted arrays have been saved to CSV files.");
-        Console.WriteLine($"Original array file: {originalFile}");
-        Console.WriteLine($"Sorted array file: {sortedFile}");
+        // // Output results with HTML-style links
+        // Console.WriteLine($"Original array file: <a href=\"{originalFile}\">original_array.csv</a>");
+        // Console.WriteLine($"Sorted array file: <a href=\"{sortedFile}\">sorted_result.csv</a>");
         Console.WriteLine($"Time taken: {totalTime} seconds.");
     }
 
@@ -98,5 +89,36 @@ static class Program
         arr[high] = temp2;
 
         return i + 1;
+    }
+
+    // Function to write an array to a CSV file
+    static void WriteToFile(string filename, int[] arr)
+    {
+        using (StreamWriter writer = new StreamWriter(filename))
+        {
+            for (int i = 0; i < arr.Length; i++)
+            {
+                writer.Write(arr[i]);
+                if (i < arr.Length - 1)
+                {
+                    writer.Write(",");
+                }
+            }
+            writer.WriteLine();
+        }
+    }
+
+    // Function to read an array from a CSV file
+    static int[] ReadFromFile(string filename)
+    {
+        string[] lines = File.ReadAllLines(filename);
+        string[] items = lines[0].Split(',');
+
+        int[] arr = new int[items.Length];
+        for (int i = 0; i < items.Length; i++)
+        {
+            arr[i] = int.Parse(items[i]);
+        }
+        return arr;
     }
 }

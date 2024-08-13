@@ -111,16 +111,28 @@
                 const resultDiv = document.getElementById("result");
                 resultDiv.innerHTML = ""; // Clear previous results
 
+                // Display sorting results
                 for (const [language, result] of Object.entries(data)) {
-                    const resultHtml = `
-                        <h2>${language} Result</h2>
-                        <p><strong>Exit Code:</strong> ${result.exitCode}</p>
-                        <p><strong>Output:</strong> <pre>${result.output}</pre></p>
-                        <p><strong>Error Output:</strong> <pre>${result.errorOutput}</pre></p>
-                        <p><strong>Original Array File:</strong> ${result.originalArrayFile}</p>
-                        <p><strong>Sorted Array File:</strong> ${result.sortedArrayFile}</p>
-                        <p><strong>Time Taken:</strong> ${result.timeTaken}</p>
-                    `;
+                    let resultHtml = `<h2>${language} Result</h2>`;
+                    
+                    // Append output
+                    resultHtml += `<p><strong>Output:</strong> <pre>${result.output.trim()}</pre></p>`;
+                    
+                    // Append file links if they exist (Hidden as per your request)
+                    /*
+                    if (result.originalArrayFile) {
+                        resultHtml += `<p><strong>Original Array File:</strong> <a href="/static/${result.originalArrayFile}" target="_blank">Download original_array.csv</a></p>`;
+                    }
+                    if (result.sortedArrayFile) {
+                        resultHtml += `<p><strong>Sorted Array File:</strong> <a href="/static/${result.sortedArrayFile}" target="_blank">Download sorted_result.csv</a></p>`;
+                    }
+                    */
+                    
+                    // Append time taken (Hidden as per your request)
+                    /*
+                    resultHtml += `<p><strong>Time Taken:</strong> ${result.timeTaken} seconds</p>`;
+                    */
+
                     resultDiv.innerHTML += resultHtml;
                 }
             })

@@ -3,7 +3,10 @@
 #include <vector>
 #include <ctime>
 #include <cstdlib>
+#include <string>
+#include <filesystem>
 
+// Function to perform Bubble Sort
 void bubbleSort(std::vector<int>& arr) {
     for (size_t i = 0; i < arr.size() - 1; i++) {
         for (size_t j = 0; j < arr.size() - i - 1; j++) {
@@ -14,6 +17,7 @@ void bubbleSort(std::vector<int>& arr) {
     }
 }
 
+// Function to write an array to a CSV file
 void writeToFile(const std::string& filename, const std::vector<int>& arr) {
     std::ofstream file(filename);
     for (size_t i = 0; i < arr.size(); i++) {
@@ -26,34 +30,66 @@ void writeToFile(const std::string& filename, const std::vector<int>& arr) {
     file.close();
 }
 
+// Function to read an array from a CSV file
+std::vector<int> readFromFile(const std::string& filename) {
+    std::vector<int> arr;
+    std::ifstream file(filename);
+    std::string line;
+    if (std::getline(file, line)) {
+        size_t start = 0;
+        size_t end = line.find(',');
+        while (end != std::string::npos) {
+            arr.push_back(std::stoi(line.substr(start, end - start)));
+            start = end + 1;
+            end = line.find(',', start);
+        }
+        arr.push_back(std::stoi(line.substr(start, end)));
+    }
+    return arr;
+}
+
 int main() {
     int n;
     std::cout << "Enter the size of the array: ";
     std::cin >> n;
 
-    std::vector<int> arr(n);
-    std::srand(std::time(nullptr));
-    for (int i = 0; i < n; i++) {
-        arr[i] = std::rand() % 100 + 1;
+    // Get the current path and navigate to the static directory
+    std::filesystem::path currentPath = std::filesystem::current_path();
+    std::filesystem::path basePath = currentPath.parent_path().parent_path().parent_path() / "static";
+
+    std::string originalFile = (basePath / "original_array.csv").string();
+    std::string sortedFile = (basePath / "sorted_result.csv").string();
+
+    std::vector<int> arr;
+
+    // Check if the original array file exists
+    if (std::filesystem::exists(originalFile)) {
+        // std::cout << "Original array file found. Reading from file..." << std::endl;
+        arr = readFromFile(originalFile);
+    } else {
+        // std::cout << "Original array file not found. Creating new array..." << std::endl;
+        arr.resize(n);
+        std::srand(std::time(nullptr));
+        for (int i = 0; i < n; i++) {
+            arr[i] = std::rand() % 100 + 1;
+        }
+        writeToFile(originalFile, arr);
     }
 
     clock_t startTime = clock();
 
-    std::string original = "original_array.csv";
-    std::string sort = "sorted_result.csv";
-
-    writeToFile(original, arr);
-
+    // Sort the array
     bubbleSort(arr);
 
-    writeToFile(sort, arr);
+    // Write the sorted array to file
+    writeToFile(sortedFile, arr);
 
     clock_t endTime = clock();
     double totalTime = static_cast<double>(endTime - startTime) / CLOCKS_PER_SEC;
 
-    std::cout << "Original and sorted arrays have been saved to CSV files." << std::endl;
-    std::cout << "Original array file: " << original << std::endl;
-    std::cout << "Sorted array file: " << sort << std::endl;
+    // // Output results with HTML-style links
+    // std::cout << "Original array file: <a href=\"" << originalFile << "\">original_array.csv</a>" << std::endl;
+    // std::cout << "Sorted array file: <a href=\"" << sortedFile << "\">sorted_result.csv</a>" << std::endl;
     std::cout << "Time taken: " << totalTime << " seconds." << std::endl;
 
     return 0;
