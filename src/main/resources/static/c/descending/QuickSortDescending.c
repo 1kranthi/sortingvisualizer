@@ -10,15 +10,15 @@ void swap(int* a, int* b) {
     *b = temp;
 }
 
-// Partition function used in Quick Sort
+// Partition function used in Quick Sort for descending order
 int partition(int arr[], int low, int high) {
     int pivot = arr[high]; // Choosing the pivot element
-    int i = (low - 1); // Index of the smaller element
+    int i = (low - 1); // Index of the larger element
 
     for (int j = low; j <= high - 1; j++) {
-        // If current element is smaller than the pivot
+        // If current element is greater than the pivot
         if (arr[j] > pivot) {
-            i++; // Increment index of smaller element
+            i++; // Increment index of larger element
             swap(&arr[i], &arr[j]);
         }
     }
@@ -26,7 +26,7 @@ int partition(int arr[], int low, int high) {
     return (i + 1);
 }
 
-// Quick Sort function
+// Quick Sort function for descending order
 void quickSort(int arr[], int low, int high) {
     if (low < high) {
         int pi = partition(arr, low, high);
@@ -88,39 +88,29 @@ int* readFromFile(const char* filename, int* n) {
 
 int main() {
     int n;
-    printf("Enter the size of the array: ");
+    // printf("Enter the size of the array: ");
     scanf("%d", &n);
 
     // Define file paths
-    const char* originalFile = "../../../static/original_array.csv";
-    const char* sortedFile = "../../../static/sorted_result.csv";
+    const char* originalFile = "../../original_array.csv";
+    const char* sortedFile = "../../sorted_result.csv";
 
-    int *arr = NULL;
-
-    // Check if the original array file exists
-    FILE *file = fopen(originalFile, "r");
-    if (file) {
-        // printf("Original array file found. Reading from file...\n");
-        fclose(file);
-        arr = readFromFile(originalFile, &n);
-    } else {
-        // printf("Original array file not found. Creating new array...\n");
-        arr = (int*)malloc(n * sizeof(int));
-        if (arr == NULL) {
-            printf("Memory allocation failed\n");
-            return 1;
-        }
-
-        srand(time(0));
-        for (int i = 0; i < n; i++) {
-            arr[i] = rand() % 100 + 1;
-        }
-        writeToFile(originalFile, arr, n);
+    // Always create a new array based on user input
+    int *arr = (int*)malloc(n * sizeof(int));
+    if (arr == NULL) {
+        printf("Memory allocation failed\n");
+        return 1;
     }
+
+    srand(time(0));
+    for (int i = 0; i < n; i++) {
+        arr[i] = rand() % 100 + 1;
+    }
+    writeToFile(originalFile, arr, n);
 
     clock_t startTime = clock();
 
-    // Sort the array using Quick Sort
+    // Sort the array using Quick Sort in descending order
     quickSort(arr, 0, n - 1);
 
     // Write the sorted array to file
@@ -129,7 +119,7 @@ int main() {
     clock_t endTime = clock();
     double totalTime = (double)(endTime - startTime) / CLOCKS_PER_SEC;
 
-    // Output results with file paths
+    // // Output results with file paths
     // printf("Original array file: %s\n", originalFile);
     // printf("Sorted array file: %s\n", sortedFile);
     printf("Time taken: %.6f seconds.\n", totalTime);

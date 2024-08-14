@@ -1,13 +1,13 @@
 const fs = require('fs');
 const path = require('path');
 
-// Quick Sort Algorithm (Descending)
+// Quick Sort Algorithm for Descending Order
 function quickSort(arr) {
     if (arr.length <= 1) return arr;
     const pivot = arr[Math.floor(arr.length / 2)];
-    const left = arr.filter(x => x > pivot); // Change to `x > pivot` for descending order
+    const left = arr.filter(x => x > pivot); // Change to > for descending order
     const middle = arr.filter(x => x === pivot);
-    const right = arr.filter(x => x < pivot); // Change to `x < pivot` for descending order
+    const right = arr.filter(x => x < pivot); // Change to < for descending order
     return [...quickSort(left), ...middle, ...quickSort(right)];
 }
 
@@ -44,16 +44,9 @@ function main() {
     const originalFile = path.join(basePath, 'original_array.csv');
     const sortedFile = path.join(basePath, 'sorted_result.csv');
 
-    let arr;
-
-    if (fs.existsSync(originalFile)) {
-        // console.log('Original array file found. Reading from file...');
-        arr = readFromFile(originalFile);
-    } else {
-        // console.log('Original array file not found. Creating new array...');
-        arr = Array.from({ length: n }, () => Math.floor(Math.random() * 100) + 1);
-        writeToFile(originalFile, arr);
-    }
+    // Always create a new array based on user input
+    let arr = Array.from({ length: n }, () => Math.floor(Math.random() * 100) + 1);
+    writeToFile(originalFile, arr);
 
     const startTime = Date.now();
 

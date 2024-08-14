@@ -70,7 +70,7 @@ std::vector<int> readFromFile(const std::string& filename) {
 
 int main() {
     int n;
-    std::cout << "Enter the size of the array: ";
+    // std::cout << "Enter the size of the array: ";
     std::cin >> n;
 
     // Get the current path and navigate to the static directory
@@ -82,19 +82,13 @@ int main() {
 
     std::vector<int> arr;
 
-    // Check if the original array file exists
-    if (std::filesystem::exists(originalFile)) {
-        // std::cout << "Original array file found. Reading from file..." << std::endl;
-        arr = readFromFile(originalFile);
-    } else {
-        // std::cout << "Original array file not found. Creating new array..." << std::endl;
-        arr.resize(n);
-        std::srand(std::time(nullptr));
-        for (int i = 0; i < n; i++) {
-            arr[i] = std::rand() % 100 + 1;
-        }
-        writeToFile(originalFile, arr);
+    // Always generate a new array based on user input
+    arr.resize(n);
+    std::srand(std::time(nullptr));
+    for (int i = 0; i < n; i++) {
+        arr[i] = std::rand() % 100 + 1;
     }
+    writeToFile(originalFile, arr);
 
     clock_t startTime = clock();
 
@@ -107,9 +101,9 @@ int main() {
     clock_t endTime = clock();
     double totalTime = static_cast<double>(endTime - startTime) / CLOCKS_PER_SEC;
 
-    // // Output results with HTML-style links
-    // std::cout << "Original array file: <a href=\"" << originalFile << "\">original_array.csv</a>" << std::endl;
-    // std::cout << "Sorted array file: <a href=\"" << sortedFile << "\">sorted_result.csv</a>" << std::endl;
+    // // Output results
+    // std::cout << "Original array file: " << originalFile << std::endl;
+    // std::cout << "Sorted array file: " << sortedFile << std::endl;
     std::cout << "Time taken: " << totalTime << " seconds." << std::endl;
 
     return 0;

@@ -46,16 +46,9 @@ function main() {
     const originalFile = path.join(basePath, 'original_array.csv');
     const sortedFile = path.join(basePath, 'sorted_result.csv');
 
-    let arr;
-
-    if (fs.existsSync(originalFile)) {
-        // console.log('Original array file found. Reading from file...');
-        arr = readFromFile(originalFile);
-    } else {
-        // console.log('Original array file not found. Creating new array...');
-        arr = Array.from({ length: n }, () => Math.floor(Math.random() * 100) + 1);
-        writeToFile(originalFile, arr);
-    }
+    // Always create a new array based on user input
+    const arr = Array.from({ length: n }, () => Math.floor(Math.random() * 100) + 1);
+    writeToFile(originalFile, arr);
 
     const startTime = Date.now();
 
@@ -67,7 +60,7 @@ function main() {
     const totalTime = (endTime - startTime) / 1000;
 
     // // Output results with HTML-style links
-    // console.log(`Original array file: <a href=/static/original_array.csv>original_array.csv</a>`);
+    // console.log(`Original array file: <a href="/static/original_array.csv">original_array.csv</a>`);
     // console.log(`Sorted array file: <a href="/static/sorted_result.csv">sorted_result.csv</a>`);
     console.log(`Time taken: ${totalTime} seconds.`);
 }

@@ -11,7 +11,7 @@ public class QuickSortAscending {
 
     public static void main(String[] args) {
         Scanner sc = new Scanner(System.in);
-        System.out.print("Enter the size of the array: ");
+        // System.out.print("Enter the size of the array: ");
         int n = sc.nextInt();
 
         long startTime = System.currentTimeMillis();
@@ -23,20 +23,14 @@ public class QuickSortAscending {
 
         List<Integer> arr;
 
-        // Check if the original array file exists
-        if (Files.exists(Paths.get(originalFilePath))) {
-            // System.out.println("Original array file found. Reading from file...");
-            arr = readFromFile(originalFilePath);
-        } else {
-            // System.out.println("Original array file not found. Creating new array...");
-            arr = new ArrayList<>(n);
-            Random random = new Random();
-            for (int i = 0; i < n; i++) {
-                arr.add(random.nextInt(100) + 1);
-            }
-            // Write the original array to file
-            writeToFile(originalFilePath, arr);
+        // Always create a new array based on user input
+        arr = new ArrayList<>(n);
+        Random random = new Random();
+        for (int i = 0; i < n; i++) {
+            arr.add(random.nextInt(100) + 1);
         }
+        // Write the original array to file
+        writeToFile(originalFilePath, arr);
 
         // Sort the array using Quick Sort
         quickSort(arr, 0, arr.size() - 1);

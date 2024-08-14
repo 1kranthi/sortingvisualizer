@@ -6,18 +6,18 @@
 #include <string>
 #include <filesystem>
 
-// Function to perform Quick Sort in descending order
-void quickSortDescending(std::vector<int>& arr, int low, int high) {
+// Function to perform Quick Sort
+void quickSort(std::vector<int>& arr, int low, int high) {
     if (low < high) {
         int pivotIndex = low + (high - low) / 2;
         int pivot = arr[pivotIndex];
         int i = low, j = high;
 
         while (i <= j) {
-            while (arr[i] > pivot) { // Changed from < to >
+            while (arr[i] > pivot) {
                 i++;
             }
-            while (arr[j] < pivot) { // Changed from > to <
+            while (arr[j] < pivot) {
                 j--;
             }
             if (i <= j) {
@@ -29,10 +29,10 @@ void quickSortDescending(std::vector<int>& arr, int low, int high) {
 
         // Recursively sort the partitions
         if (low < j) {
-            quickSortDescending(arr, low, j);
+            quickSort(arr, low, j);
         }
         if (i < high) {
-            quickSortDescending(arr, i, high);
+            quickSort(arr, i, high);
         }
     }
 }
@@ -70,7 +70,7 @@ std::vector<int> readFromFile(const std::string& filename) {
 
 int main() {
     int n;
-    std::cout << "Enter the size of the array: ";
+    // std::cout << "Enter the size of the array: ";
     std::cin >> n;
 
     // Get the current path and navigate to the static directory
@@ -82,24 +82,18 @@ int main() {
 
     std::vector<int> arr;
 
-    // Check if the original array file exists
-    if (std::filesystem::exists(originalFile)) {
-        // std::cout << "Original array file found. Reading from file..." << std::endl;
-        arr = readFromFile(originalFile);
-    } else {
-        // std::cout << "Original array file not found. Creating new array..." << std::endl;
-        arr.resize(n);
-        std::srand(std::time(nullptr));
-        for (int i = 0; i < n; i++) {
-            arr[i] = std::rand() % 100 + 1;
-        }
-        writeToFile(originalFile, arr);
+    // Always generate a new array based on user input
+    arr.resize(n);
+    std::srand(std::time(nullptr));
+    for (int i = 0; i < n; i++) {
+        arr[i] = std::rand() % 100 + 1;
     }
+    writeToFile(originalFile, arr);
 
     clock_t startTime = clock();
 
-    // Sort the array using Quick Sort in descending order
-    quickSortDescending(arr, 0, arr.size() - 1);
+    // Sort the array using Quick Sort
+    quickSort(arr, 0, arr.size() - 1);
 
     // Write the sorted array to file
     writeToFile(sortedFile, arr);
@@ -107,9 +101,9 @@ int main() {
     clock_t endTime = clock();
     double totalTime = static_cast<double>(endTime - startTime) / CLOCKS_PER_SEC;
 
-    // // Output results with HTML-style links
-    // std::cout << "Original array file: <a href=\"" << originalFile << "\">original_array.csv</a>" << std::endl;
-    // std::cout << "Sorted array file: <a href=\"" << sortedFile << "\">sorted_result.csv</a>" << std::endl;
+    // // Output results
+    // std::cout << "Original array file: " << originalFile << std::endl;
+    // std::cout << "Sorted array file: " << sortedFile << std::endl;
     std::cout << "Time taken: " << totalTime << " seconds." << std::endl;
 
     return 0;

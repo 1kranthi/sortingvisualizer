@@ -68,35 +68,25 @@ int* readFromFile(const char* filename, int* n) {
 
 int main() {
     int n;
-    printf("Enter the size of the array: ");
+    // printf("Enter the size of the array: ");
     scanf("%d", &n);
 
     // Define file paths
-    const char* originalFile = "../../../static/original_array.csv";
-    const char* sortedFile = "../../../static/sorted_result.csv";
+    const char* originalFile = "../../original_array.csv";
+    const char* sortedFile = "../../sorted_result.csv";
 
-    int *arr = NULL;
-
-    // Check if the original array file exists
-    FILE *file = fopen(originalFile, "r");
-    if (file) {
-        // printf("Original array file found. Reading from file...\n");
-        fclose(file);
-        arr = readFromFile(originalFile, &n);
-    } else {
-        // printf("Original array file not found. Creating new array...\n");
-        arr = (int*)malloc(n * sizeof(int));
-        if (arr == NULL) {
-            printf("Memory allocation failed\n");
-            return 1;
-        }
-
-        srand(time(0));
-        for (int i = 0; i < n; i++) {
-            arr[i] = rand() % 100 + 1;
-        }
-        writeToFile(originalFile, arr, n);
+    // Always create a new array based on user input
+    int *arr = (int*)malloc(n * sizeof(int));
+    if (arr == NULL) {
+        printf("Memory allocation failed\n");
+        return 1;
     }
+
+    srand(time(0));
+    for (int i = 0; i < n; i++) {
+        arr[i] = rand() % 100 + 1;
+    }
+    writeToFile(originalFile, arr, n);
 
     clock_t startTime = clock();
 

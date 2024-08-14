@@ -6,7 +6,7 @@ static class Program
 {
     static void Main()
     {
-        Console.Write("Enter the size of the array: ");
+        // Console.Write("Enter the size of the array: ");
         int n = int.Parse(Console.ReadLine());
 
         // Define file paths relative to the "static" directory
@@ -17,23 +17,14 @@ static class Program
 
         int[] arr;
 
-        // Check if the original array file exists
-        if (File.Exists(originalFile))
+        // Always create a new array based on user input
+        arr = new int[n];
+        Random random = new Random();
+        for (int i = 0; i < n; i++)
         {
-            // Console.WriteLine("Original array file found. Reading from file...");
-            arr = ReadFromFile(originalFile);
+            arr[i] = random.Next(1, 101);
         }
-        else
-        {
-            // Console.WriteLine("Original array file not found. Creating new array...");
-            arr = new int[n];
-            Random random = new Random();
-            for (int i = 0; i < n; i++)
-            {
-                arr[i] = random.Next(1, 101);
-            }
-            WriteToFile(originalFile, arr);
-        }
+        WriteToFile(originalFile, arr);
 
         // Start timing
         Stopwatch stopwatch = Stopwatch.StartNew();
@@ -49,8 +40,8 @@ static class Program
         WriteToFile(sortedFile, arr);
 
         // // Output results with HTML-style links
-        // Console.WriteLine($"Original array file: <a href=\"{originalFile}\">original_array.csv</a>");
-        // Console.WriteLine($"Sorted array file: <a href=\"{sortedFile}\">sorted_result.csv</a>");
+        // Console.WriteLine($"Original array file: <a href=\"/static/original_array.csv\">original_array.csv</a>");
+        // Console.WriteLine($"Sorted array file: <a href=\"/static/sorted_result.csv\">sorted_result.csv</a>");
         Console.WriteLine($"Time taken: {totalTime} seconds.");
     }
 

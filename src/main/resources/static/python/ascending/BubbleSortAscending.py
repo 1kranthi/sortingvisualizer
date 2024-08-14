@@ -26,7 +26,7 @@ def read_from_file(filename):
 def main():
     # Get the array size dynamically from user input
     try:
-        n = int(input("Enter the size of the array: "))  # Get array size from user input
+        n = int(input(""))  # Get array size from user input
         if n <= 0:
             raise ValueError
     except ValueError:
@@ -38,13 +38,9 @@ def main():
     original_file = os.path.join(base_path, 'original_array.csv')
     sorted_file = os.path.join(base_path, 'sorted_result.csv')
 
-    if os.path.exists(original_file):
-        # print('Original array file found. Reading from file...')
-        arr = read_from_file(original_file)
-    else:
-        # print('Original array file not found. Creating new array...')
-        arr = [random.randint(1, 100) for _ in range(n)]
-        write_to_file(original_file, arr)
+    # Always create a new array based on user input
+    arr = [random.randint(1, 100) for _ in range(n)]
+    write_to_file(original_file, arr)
 
     start_time = time.time()
 

@@ -56,6 +56,14 @@
             max-height: 300px;
             overflow-y: auto;
         }
+        #fileLinks {
+            margin-top: 20px;
+            text-align: left;
+            max-height: 300px;
+            overflow-y: auto;
+            border-top: 1px solid #ccc;
+            padding-top: 10px;
+        }
     </style>
 </head>
 <body>
@@ -82,6 +90,11 @@
             </div>
             <button type="submit">Sort</button>
         </form>
+        
+        <div id="fileLinks" class="fileLinks">
+            <!-- Links to CSV files will be displayed here -->
+        </div>
+
         <div id="result" class="result">
             <!-- Sorting results will be displayed here -->
         </div>
@@ -109,7 +122,9 @@
             .then(response => response.json())
             .then(data => {
                 const resultDiv = document.getElementById("result");
+                const fileLinksDiv = document.getElementById("fileLinks");
                 resultDiv.innerHTML = ""; // Clear previous results
+                fileLinksDiv.innerHTML = ""; // Clear previous file links
 
                 // Display sorting results
                 for (const [language, result] of Object.entries(data)) {
@@ -117,24 +132,13 @@
                     
                     // Append output
                     resultHtml += `<p><strong>Output:</strong> <pre>${result.output.trim()}</pre></p>`;
-                    
-                    // Append file links if they exist (Hidden as per your request)
-                    /*
-                    if (result.originalArrayFile) {
-                        resultHtml += `<p><strong>Original Array File:</strong> <a href="/static/${result.originalArrayFile}" target="_blank">Download original_array.csv</a></p>`;
-                    }
-                    if (result.sortedArrayFile) {
-                        resultHtml += `<p><strong>Sorted Array File:</strong> <a href="/static/${result.sortedArrayFile}" target="_blank">Download sorted_result.csv</a></p>`;
-                    }
-                    */
-                    
-                    // Append time taken (Hidden as per your request)
-                    /*
-                    resultHtml += `<p><strong>Time Taken:</strong> ${result.timeTaken} seconds</p>`;
-                    */
-
                     resultDiv.innerHTML += resultHtml;
                 }
+
+                // Provide links to download/view the CSV files
+                fileLinksDiv.innerHTML += `<h3>Download CSV Files:</h3>`;
+                fileLinksDiv.innerHTML += `<p><a href="/original_array.csv" download>Download Original Array File</a></p>`;
+                fileLinksDiv.innerHTML += `<p><a href="/sorted_result.csv" download>Download Sorted Array File</a></p>`;
             })
             .catch(error => {
                 console.error("Error:", error);
