@@ -31,10 +31,20 @@ sudo yum install -y nginx
 echo "Installing Node.js..."
 sudo yum install -y nodejs
 
-# Download and Install .NET 8.0 SDK
-echo "Downloading and Installing .NET 8.0 SDK..."
-wget https://download.visualstudio.microsoft.com/download/pr/6f3b1c94-6892-4974-8f76-f5cfc5016217/88d5e8ad764946e05a71ed6f6ec7c1a4/dotnet-sdk-8.0.100-linux-x64.rpm
-sudo yum localinstall -y dotnet-sdk-8.0.100-linux-x64.rpm
+# Configure Microsoft repository for .NET SDK
+echo "Configuring Microsoft repository for .NET SDK..."
+sudo tee /etc/yum.repos.d/microsoft-prod.repo <<EOF
+[packages-microsoft-com-prod]
+name=Microsoft Packages for Enterprise Linux 8
+baseurl=https://packages.microsoft.com/config/centos/8/prod
+enabled=1
+gpgcheck=1
+gpgkey=https://packages.microsoft.com/keys/microsoft.asc
+EOF
+
+# Install .NET 8.0 SDK
+echo "Installing .NET 8.0 SDK..."
+sudo yum install -y dotnet-sdk-8.0
 
 # Configure Nginx to forward traffic from port 82 to port 8088
 echo "Configuring Nginx..."
