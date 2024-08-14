@@ -1,4 +1,3 @@
-
 package com.example.sortingvisualizer.controller;
 
 import org.springframework.web.bind.annotation.*;
@@ -23,32 +22,32 @@ public class SortingController {
     }
 
     private SortingResult runCSort(SortRequest request) {
-        String basePath = "/home/solipuram-kranthikumar/Downloads/sortingvisualizer/src/main/resources/static/c/";
+        String basePath = "src/main/resources/static/c/";
         return executeCommand(basePath, request, "c");
     }
 
     private SortingResult runCppSort(SortRequest request) {
-        String basePath = "/home/solipuram-kranthikumar/Downloads/sortingvisualizer/src/main/resources/static/cpp/";
+        String basePath = "src/main/resources/static/cpp/";
         return executeCommand(basePath, request, "cpp");
     }
 
     private SortingResult runJavaSort(SortRequest request) {
-        String basePath = "/home/solipuram-kranthikumar/Downloads/sortingvisualizer/src/main/resources/static/java/";
+        String basePath = "src/main/resources/static/java/";
         return executeCommand(basePath, request, "java");
     }
 
     private SortingResult runPythonSort(SortRequest request) {
-        String basePath = "/home/solipuram-kranthikumar/Downloads/sortingvisualizer/src/main/resources/static/python/";
+        String basePath = "src/main/resources/static/python/";
         return executeCommand(basePath, request, "python");
     }
 
     private SortingResult runJavaScriptSort(SortRequest request) {
-        String basePath = "/home/solipuram-kranthikumar/Downloads/sortingvisualizer/src/main/resources/static/javascript/";
+        String basePath = "src/main/resources/static/javascript/";
         return executeCommand(basePath, request, "javascript");
     }
 
     private SortingResult runCSharpSort(SortRequest request) {
-        String basePath = "/home/solipuram-kranthikumar/Downloads/sortingvisualizer/src/main/resources/static/csharp/";
+        String basePath = "src/main/resources/static/csharp/";
         return executeCommand(basePath, request, "csharp");
     }
 
@@ -81,7 +80,6 @@ public class SortingController {
             case "javascript":
                 compileCommand = ""; // No compilation needed for JavaScript
                 runCommand = "node " + algorithm + direction.substring(0, 1).toUpperCase() + direction.substring(1) + extension + " " + inputSize;
-
                 break;
             case "csharp":
                 path = basePath + direction + "/" + algorithm + "Project";
@@ -121,7 +119,7 @@ public class SortingController {
             result.setExitCode(exitCode);
 
             System.out.println("Full Output: " + output.toString()); // Add this line
-        System.out.println("Error Output: " + errorOutput.toString());
+            System.out.println("Error Output: " + errorOutput.toString());
         
             // Assuming the program prints the time taken and file names
             String[] outputLines = output.toString().split("\n");

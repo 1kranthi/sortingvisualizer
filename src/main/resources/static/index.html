@@ -25,17 +25,12 @@
         .container div {
             margin-bottom: 15px;
         }
-        input[type="number"] {
+        input[type="number"], select {
             width: 100%;
             padding: 10px;
             border: 1px solid #ccc;
             border-radius: 5px;
-        }
-        select {
-            width: 100%;
-            padding: 10px;
-            border: 1px solid #ccc;
-            border-radius: 5px;
+            box-sizing: border-box;
         }
         button {
             width: 100%;
@@ -71,7 +66,7 @@
         <h1>Sorting Visualizer</h1>
         <form id="sort-form">
             <div>
-                <label for="arraySize">Enter Array Size</label>
+                <label for="arraySize">Enter Number</label>
                 <input type="number" id="arraySize" name="arraySize" placeholder="Enter array size" min="1" required>
             </div>
             <div>
