@@ -22,32 +22,32 @@ public class SortingController {
     }
 
     private SortingResult runCSort(SortRequest request) {
-        String basePath = "src/main/resources/static/c/";
+        String basePath = "/home/ec2-user/sortingvisualizer/src/main/resources/static/c/";
         return executeCommand(basePath, request, "c");
     }
 
     private SortingResult runCppSort(SortRequest request) {
-        String basePath = "src/main/resources/static/cpp/";
+        String basePath = "/home/ec2-user/sortingvisualizer/src/main/resources/static/cpp/";
         return executeCommand(basePath, request, "cpp");
     }
 
     private SortingResult runJavaSort(SortRequest request) {
-        String basePath = "src/main/resources/static/java/";
+        String basePath = "/home/ec2-user/sortingvisualizer/src/main/resources/static/java/";
         return executeCommand(basePath, request, "java");
     }
 
     private SortingResult runPythonSort(SortRequest request) {
-        String basePath = "src/main/resources/static/python/";
+        String basePath = "/home/ec2-user/sortingvisualizer/src/main/resources/static/python/";
         return executeCommand(basePath, request, "python");
     }
 
     private SortingResult runJavaScriptSort(SortRequest request) {
-        String basePath = "src/main/resources/static/javascript/";
+        String basePath = "/home/ec2-user/sortingvisualizer/src/main/resources/static/javascript/";
         return executeCommand(basePath, request, "javascript");
     }
 
     private SortingResult runCSharpSort(SortRequest request) {
-        String basePath = "src/main/resources/static/csharp/";
+        String basePath = "/home/ec2-user/sortingvisualizer/src/main/resources/static/csharp/";
         return executeCommand(basePath, request, "csharp");
     }
 
@@ -83,7 +83,7 @@ public class SortingController {
                 break;
             case "csharp":
                 path = basePath + direction + "/" + algorithm + "Project";
-                runCommand = "echo -e \"" + inputSize + "\" | dotnet run";
+                runCommand = "echo -e \"" + inputSize + "\" | dotnet run 2>&1 | grep -E \"Time taken|^\"";
                 break;
         }
         StringBuilder command = new StringBuilder("cd " + path);
