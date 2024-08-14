@@ -9,7 +9,7 @@ sudo yum update -y
 
 # Install Java 21
 echo "Installing Java 21..."
-sudo yum install -y java-21-openjdk
+sudo yum install -y java-21-amazon-corretto
 
 # Install Maven
 echo "Installing Maven..."
@@ -31,19 +31,20 @@ sudo yum install -y nginx
 echo "Installing Node.js..."
 sudo yum install -y nodejs
 
-# Install .NET SDK (for C#)
-echo "Installing .NET SDK..."
-sudo yum install -y dotnet-sdk-6.0
+# Download and Install .NET 8.0 SDK
+echo "Downloading and Installing .NET 8.0 SDK..."
+wget https://download.visualstudio.microsoft.com/download/pr/6f3b1c94-6892-4974-8f76-f5cfc5016217/88d5e8ad764946e05a71ed6f6ec7c1a4/dotnet-sdk-8.0.100-linux-x64.rpm
+sudo yum localinstall -y dotnet-sdk-8.0.100-linux-x64.rpm
 
 # Configure Nginx to forward traffic from port 82 to port 8088
 echo "Configuring Nginx..."
 cat <<EOL | sudo tee /etc/nginx/conf.d/sortingvisualizer.conf
 server {
     listen 82;
-    server_name localhost; # You can replace this with your domain name
+    server_name localhost;
 
     location / {
-        proxy_pass http://localhost:8088; # Forward traffic to port 8088
+        proxy_pass http://localhost:8088;
         proxy_set_header Host \$host;
         proxy_set_header X-Real-IP \$remote_addr;
         proxy_set_header X-Forwarded-For \$proxy_add_x_forwarded_for;
@@ -56,16 +57,11 @@ EOL
 echo "Restarting Nginx..."
 sudo systemctl restart nginx
 
-# Clone the Git repository (if not already cloned)
-if [ ! -d "sortingvisualizer" ]; then
-    echo "Cloning the Git repository..."
-    git clone https://github.com/1kranthi/sortingvisualizer.git
-fi
+# Set Java 21 environment variables locally for this application
+export JAVA_HOME=/usr/lib/jvm/java-21-amazon-corretto
+export PATH=$JAVA_HOME/bin:$PATH
 
-# Change to the repository directory using relative path
-cd "$(dirname "$0")/sortingvisualizer"
-
-# Build the Java application
+# Build the Java application using Java 21
 echo "Building the Java application..."
 mvn clean package
 
@@ -74,6 +70,6 @@ cd target
 
 # Run the JAR file on port 8088 using nohup
 echo "Running the Java application on port 8088..."
-nohup java -jar sortingvisualizer-0.0.1-SNAPSHOT.jar > app.log 2>&1
+nohup java -jar sortingvisualizer-0.0.1-SNAPSHOT.jar > app.log 2>&1 &
 
 echo "Setup complete and application is running."
