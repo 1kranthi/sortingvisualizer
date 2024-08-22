@@ -120,7 +120,7 @@ public class SortingController {
 
             System.out.println("Full Output: " + output.toString()); // Add this line
             System.out.println("Error Output: " + errorOutput.toString());
-        
+
             // Assuming the program prints the time taken and file names
             String[] outputLines = output.toString().split("\n");
             for (String outputLine : outputLines) {
